@@ -1,6 +1,6 @@
 # capitalsGame
 
-You Can check the game <a href="http://jjmontalban.com/cousine/index.html">HERE</a>
+You Can check the game <a href="http://capitals.decimart.com">HERE</a>
 
 EXERCISE CITIES QUIZ
 
