@@ -5,96 +5,111 @@
     <title>Capitals Game</title>
 
 <style type="text/css">
-	#map{
-    margin-top: 1%;
-		height: 400px;
-		width: 80%;
-		margin-left: 10%;
+
+	@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;1,100&display=swap');
+
+	* {
+		text-align: center;
+		font-family: 'Roboto', sans-serif;
 	}
+
+	#map {
+		width: 100%;
+    	height: 800px;
+	}
+
+	.bad { color: red;	}
+
+	.good { color: green; }
+
 </style>
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<script async defer src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBshxiVSOLxI2ka9daDkE7yknSlSJRB6K8&libraries=geometry"></script>
+<!-- <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"> -->
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMXbW9Zg4A_Btvr8JmgR1TIQrgrarXsAU&libraries=geometry" async></script>
 
 <script type="text/javascript">
 
-	window.onload = function(){
-  		var map = new google.maps.Map(document.getElementById('map'), {
+	window.onload = function() {
+
+  		map = new google.maps.Map(document.getElementById('map'), {
+			center: {lat: 48.924646, lng: 8.561119},
     		zoom: 4,
-    		center: {lat: 48.924646, lng: 8.561119},
-	    	styles:[
-		     {"elementType": "labels", "stylers": [{"visibility": "off"}]},
-		     {"featureType": "administrative.land_parcel","stylers": [{"visibility": "off"}]},
-		     {"featureType": "administrative.neighborhood","stylers": [{"visibility": "off"}]},
-		     {"featureType": "road","stylers": [{"visibility": "off"}]}
-		     ]
+	    	styles:
+				[
+				{"elementType": "labels", "stylers": [{"visibility": "off"}]},
+				{"featureType": "road","stylers": [{"visibility": "off"}]}
+		     	]
 	  	});
 
-  		var capitalCities = '[  {"capitalCity":"Zurich","lat":"47.37748605291098","long":"8.536714999999958"},
-					{"capitalCity": "Paris","lat": "48.858877666233724","long": "2.3470598999999766"},
-					{"capitalCity": "Madrid","lat": "40.43807216375375","long": "-3.6795366500000455"},
-					{"capitalCity": "London","lat": "51.528868434293244","long": "-0.10159864999991441"},
-					{"capitalCity": "Berlin","lat": "52.50716750345388","long": "13.424731749999978"},
-					{"capitalCity": "Amsterdam","lat": "52.354714323965155","long":"4.898623049999969"},
-					{"capitalCity": "Rome","lat": "41.91022566604198","long": "12.535997900000098"},
-					{"capitalCity": "Oslo","lat": "59.89396160257894","long": "10.785116500000072"},
-					{"capitalCity": "Vienna","lat": "48.22078734798841","long": "16.38005995000003"}]';
-		
-  		var cities = JSON.parse(capitalCities);
-  		var km=5000,i=0;
+  		cities = [
+			{"capitalCity":"Zurich","lat":"47.37748605291098","long":"8.536714999999958"},
+			{"capitalCity": "Paris","lat": "48.858877666233724","long": "2.3470598999999766"},
+			{"capitalCity": "Madrid","lat": "40.43807216375375","long": "-3.6795366500000455"},
+			{"capitalCity": "London","lat": "51.528868434293244","long": "-0.10159864999991441"},
+			{"capitalCity": "Berlin","lat": "52.50716750345388","long": "13.424731749999978"},
+			{"capitalCity": "Amsterdam","lat": "52.354714323965155","long":"4.898623049999969"},
+			{"capitalCity": "Rome","lat": "41.91022566604198","long": "12.535997900000098"},
+			{"capitalCity": "Oslo","lat": "59.89396160257894","long": "10.785116500000072"},
+			{"capitalCity": "Vienna","lat": "48.22078734798841","long": "16.38005995000003"}
+		];
 
-		document.getElementById('city').innerHTML = 'Locate '+ cities[i].capitalCity;
+  		km = 5000;
+		i = 0;
+		document.getElementById('city').innerHTML = '<p><strong>Locate ' + cities[i].capitalCity + '</strong></p>';
 
 		map.addListener('click', function(e) {
-			var pos_A = new google.maps.LatLng(cities[i].lat,cities[i].long);
-			var pos_B = e.latLng;
 
-			var marcadorB = new google.maps.Marker({
-				position: pos_B,
-				map: map,
-				title: 'intento',
-				animation: google.maps.Animation.DROP,
-				icon : 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
-				});
+			posA = new google.maps.LatLng(cities[i].lat,cities[i].long);
+			posB = e.latLng;
 
-			var marcadorA = new google.maps.Marker({
-				position: pos_A,
-				map: map,
-				title: 'soy la referencia',
-				animation: google.maps.Animation.DROP,
-				draggable: false
-				});
+			markB = new google.maps.Marker({
+								position: posB,
+								map: map,
+								title: 'intento',
+								animation: google.maps.Animation.DROP,
+								icon : 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
+								});
 
-			var res = ((google.maps.geometry.spherical.computeDistanceBetween (pos_A, marcadorB.getPosition()))/1000).toFixed(2);
+			markA = new google.maps.Marker({
+								position: posA,
+								map: map,
+								title: 'soy la referencia',
+								animation: google.maps.Animation.DROP,
+								draggable: false
+								});
 
-			document.getElementById('distance').innerHTML = res+' kms. to '+ cities[i].capitalCity;
+			res = (( google.maps.geometry.spherical.computeDistanceBetween( posA, markB.getPosition() )) /1000 ).toFixed(2);
+			
+			document.getElementById('distance').innerHTML = '<p>' + res + ' kms. from your position to ' + cities[i].capitalCity + '!</p>';
 
-			if(res<50){
-				document.getElementById('result').innerHTML = 'Good. No kms reduction';
+			if( res < 50 ) {
+				document.getElementById('result').innerHTML = '<p class="good">Good appointment! No kms. reduction</p>';
 				i++;
-				}
-			else{
-				i++;
+			}
+			else {
 				km = (km - res).toFixed(2);
-				document.getElementById('result').innerHTML = 'Bad! '+ km +' km left!';
-			     }
+				document.getElementById('result').innerHTML = '<p class="bad"> Bad! ' + km + ' kms. left! </p>';
+				i++;
+			}
 
-			if(i<cities.length){
-				document.getElementById('city').innerHTML = 'Now locate '+ cities[i].capitalCity;
+			if( i < cities.length ) {
+				document.getElementById('city').innerHTML = '<p><strong>Now locate ' + cities[i].capitalCity + '</strong></p>';
 				console.log(i);
-				}
+			}
+			else {
+				document.getElementById('distance').innerHTML = '<p class="good"><strong>Congrats!</strong></p>';
+				document.getElementById('result').innerHTML = '<strong>you score is ' + km + '!</strong>';
+				document.getElementById('city').innerHTML = '<p>Coded by <a href="https://jjmontalban.github.io/">JJMöntabán</a></p>';
+			}
 
-			else{
-				document.getElementById('distance').innerHTML = 'Game over';
-				document.getElementById('result').innerHTML = 'you score is '+ km +'!';
-				document.getElementById('city').innerHTML = 'Congrats!';
-				}
-
-			if(km<0){
-			  document.getElementById('distance').innerHTML = 'Game over';
-			  document.getElementById('result').innerHTML = 'finished kilometers!';
-			  document.getElementById('city').innerHTML = 'You cannot travel anymore...';
-			  }
+			if( km < 0 ) {
+			  	document.getElementById('distance').innerHTML = '<p class="bad"><strong>Ouch!</strong></p>';
+			  	document.getElementById('result').innerHTML = '<strong>Kilometers Over!</strong>';
+				  document.getElementById('city').innerHTML = '<p>Coded by <a href="https://jjmontalban.github.io/">JJMöntabán</a></p>';
+			}
 
 		});
 	};
@@ -102,9 +117,9 @@
 
 </head>
 <body>
-  <div id="map"></div>
-  <div class="text-center" id="distance"></div>
-  <div class="text-center" id="result"></div>
-  <div class="text-center" id="city"></div>
+	<div id="distance"></div>
+	<div id="result"></div>
+	<div id="city"></div>
+	<div id="map"></div>
 </body>
 </html>
