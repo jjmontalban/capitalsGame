@@ -24,10 +24,6 @@
 
 </style>
 
-<!-- <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"> -->
-
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMXbW9Zg4A_Btvr8JmgR1TIQrgrarXsAU&libraries=geometry" async></script>
 
 <script type="text/javascript">
@@ -35,17 +31,17 @@
 	window.onload = function() {
 
   		map = new google.maps.Map(document.getElementById('map'), {
-			center: {lat: 48.924646, lng: 8.561119},
-    		zoom: 4,
-	    	styles:
-				[
-				{"elementType": "labels", "stylers": [{"visibility": "off"}]},
-				{"featureType": "road","stylers": [{"visibility": "off"}]}
-		     	]
-	  	});
+					center: {lat: 48.924646, lng: 8.561119},
+    				zoom: 4,
+	    			styles:
+						[
+							{"elementType": "labels", "stylers": [{"visibility": "off"}]},
+							{"featureType": "road","stylers": [{"visibility": "off"}]}
+						]
+	  			});
 
   		cities = [
-			{"capitalCity":"Zurich","lat":"47.37748605291098","long":"8.536714999999958"},
+			{"capitalCity": "Zurich","lat":"47.37748605291098","long":"8.536714999999958"},
 			{"capitalCity": "Paris","lat": "48.858877666233724","long": "2.3470598999999766"},
 			{"capitalCity": "Madrid","lat": "40.43807216375375","long": "-3.6795366500000455"},
 			{"capitalCity": "London","lat": "51.528868434293244","long": "-0.10159864999991441"},
@@ -58,6 +54,7 @@
 
   		km = 5000;
 		i = 0;
+
 		document.getElementById('city').innerHTML = '<p><strong>Locate ' + cities[i].capitalCity + '</strong></p>';
 
 		map.addListener('click', function(e) {
@@ -88,8 +85,7 @@
 			if( res < 50 ) {
 				document.getElementById('result').innerHTML = '<p class="good">Good appointment! No kms. reduction</p>';
 				i++;
-			}
-			else {
+			}else {
 				km = (km - res).toFixed(2);
 				document.getElementById('result').innerHTML = '<p class="bad"> Bad! ' + km + ' kms. left! </p>';
 				i++;
@@ -98,8 +94,7 @@
 			if( i < cities.length ) {
 				document.getElementById('city').innerHTML = '<p><strong>Now locate ' + cities[i].capitalCity + '</strong></p>';
 				console.log(i);
-			}
-			else {
+			}else {
 				document.getElementById('distance').innerHTML = '<p class="good"><strong>Congrats!</strong></p>';
 				document.getElementById('result').innerHTML = '<strong>you score is ' + km + '!</strong>';
 				document.getElementById('city').innerHTML = '<p>Coded by <a href="https://jjmontalban.github.io/">JJMöntabán</a></p>';
@@ -108,11 +103,12 @@
 			if( km < 0 ) {
 			  	document.getElementById('distance').innerHTML = '<p class="bad"><strong>Ouch!</strong></p>';
 			  	document.getElementById('result').innerHTML = '<strong>Kilometers Over!</strong>';
-				  document.getElementById('city').innerHTML = '<p>Coded by <a href="https://jjmontalban.github.io/">JJMöntabán</a></p>';
+				document.getElementById('city').innerHTML = '<p>Coded by <a href="https://jjmontalban.github.io/">JJMöntabán</a></p>';
 			}
 
 		});
 	};
+
 </script>
 
 </head>
