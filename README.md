@@ -1,6 +1,6 @@
 # capitalsGame
 
-You Can check the game <a href="http://capitals.decimart.com">HERE</a>
+You Can check the game <a href="https://jjmontalban.github.io/capitalsGame/">HERE</a>
 
 A responsive HTML Game that works on desktop and mobile browsers:
 
