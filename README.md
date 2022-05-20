@@ -2,7 +2,7 @@
 
 You Can check the game <a href="https://jjmontalban.github.io/capitalsGame/">HERE</a>
 
-A responsive HTML Game that works on desktop and mobile browsers:
+A responsive Javascript Game that works on desktop and mobile browsers:
 
 
      • Use the given JSON to provide a list of cities (embed the JSON structure in your HTML)
