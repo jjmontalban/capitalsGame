@@ -26,17 +26,45 @@ border-radius: 5px;
 z-index: 10;
 }
 
+#distance, #result, #city {
+    display: none; /* Ocultos por defecto */
+}
+
 #distance {
 top: 10px;
 }
 
 #result {
-top: 90px; /* Incrementado para más espacio */
+top: 90px;
 }
 
 #city {
-top: 170px; /* Incrementado para más espacio */
+top: 170px;
 }
 
 .bad { color: red; }
 .good { color: green; }
+
+#popup {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    color: white;
+    border-radius: 10px;
+    text-align: center;
+    display: none;
+    z-index: 20;
+}
+
+#popup button {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}

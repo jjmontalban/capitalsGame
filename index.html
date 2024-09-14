@@ -3,8 +3,13 @@
 <head>
     <meta charset="utf-8" />
     <title>Capitals Game</title>
-	<link rel="stylesheet" href="style.css">
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBeOvliQavGXN5OlShCInJdSXwtTX7nBPo&libraries=geometry" async></script>
+    <link rel="stylesheet" href="style.css">
+    <script 
+        src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=geometry" 
+        async 
+        defer>
+    </script>
+
     <script type="text/javascript">
         window.onload = function() {
             const cities = [
@@ -22,9 +27,10 @@
             let km = 5000;
             let index = 0;
 
+            // Inicializa el mapa
             const map = new google.maps.Map(document.getElementById('map'), {
                 center: { lat: 48.924646, lng: 8.561119 },
-                zoom: 4,
+                zoom: 5,
                 styles: [
                     { "elementType": "labels", "stylers": [{ "visibility": "off" }] },
                     { "featureType": "road", "stylers": [{ "visibility": "off" }] }
@@ -97,11 +103,26 @@
             };
 
             map.addListener('click', handleClick);
-            setCityMessage();
+
+            // Evento onclick para el botón "Next"
+            document.getElementById('nextBtn').onclick = function() {
+                document.getElementById('popup').style.display = 'none';
+                document.getElementById('distance').style.display = 'block';  // Muestra los otros mensajes
+                document.getElementById('result').style.display = 'block';   // Muestra resultados
+                document.getElementById('city').style.display = 'block';     // Muestra la ciudad
+                initializeNextCity();  // Comienza el juego
+            };
+
+            // Muestra el popup al cargar
+            document.getElementById('popup').style.display = 'block';
         };
     </script>
 </head>
 <body>
+    <div id="popup">
+        <p>Welcome to Capitals Game! Ready to locate the first capital?</p>
+        <button id="nextBtn">Next</button>
+    </div>    
     <div id="distance"></div>
     <div id="result"></div>
     <div id="city"></div>
