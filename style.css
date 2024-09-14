@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;1,100&display=swap');
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+* {
+    font-family: 'Roboto', sans-serif;
+}
+
+#map {
+    width: 100%;
+    height: 100%;
+}
+#distance, #result, #city {
+position: absolute;
+left: 50%;
+transform: translateX(-50%);
+color: #fff;
+background: rgba(0, 0, 0, 0.5);
+padding: 10px;
+border-radius: 5px;
+z-index: 10;
+}
+
+#distance {
+top: 10px;
+}
+
+#result {
+top: 90px; /* Incrementado para más espacio */
+}
+
+#city {
+top: 170px; /* Incrementado para más espacio */
+}
+
+.bad { color: red; }
+.good { color: green; }

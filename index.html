@@ -3,119 +3,108 @@
 <head>
     <meta charset="utf-8" />
     <title>Capitals Game</title>
+	<link rel="stylesheet" href="style.css">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBeOvliQavGXN5OlShCInJdSXwtTX7nBPo&libraries=geometry" async></script>
+    <script type="text/javascript">
+        window.onload = function() {
+            const cities = [
+                { capitalCity: "Zurich", lat: "47.37748605291098", long: "8.536714999999958" },
+                { capitalCity: "Paris", lat: "48.858877666233724", long: "2.3470598999999766" },
+                { capitalCity: "Madrid", lat: "40.43807216375375", long: "-3.6795366500000455" },
+                { capitalCity: "London", lat: "51.528868434293244", long: "-0.10159864999991441" },
+                { capitalCity: "Berlin", lat: "52.50716750345388", long: "13.424731749999978" },
+                { capitalCity: "Amsterdam", lat: "52.354714323965155", long: "4.898623049999969" },
+                { capitalCity: "Rome", lat: "41.91022566604198", long: "12.535997900000098" },
+                { capitalCity: "Oslo", lat: "59.89396160257894", long: "10.785116500000072" },
+                { capitalCity: "Vienna", lat: "48.22078734798841", long: "16.38005995000003" }
+            ];
 
-<style type="text/css">
+            let km = 5000;
+            let index = 0;
 
-	@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;1,100&display=swap');
+            const map = new google.maps.Map(document.getElementById('map'), {
+                center: { lat: 48.924646, lng: 8.561119 },
+                zoom: 4,
+                styles: [
+                    { "elementType": "labels", "stylers": [{ "visibility": "off" }] },
+                    { "featureType": "road", "stylers": [{ "visibility": "off" }] }
+                ]
+            });
 
-	* {
-		text-align: center;
-		font-family: 'Roboto', sans-serif;
-	}
+            const setCityMessage = () => {
+                document.getElementById('city').innerHTML = `<p><strong>Locate ${cities[index].capitalCity}</strong></p>`;
+            };
 
-	#map {
-		width: 100%;
-    	height: 800px;
-	}
+            const displayResult = (message, isGood) => {
+                const resultElement = document.getElementById('result');
+                resultElement.innerHTML = `<p class="${isGood ? 'good' : 'bad'}">${message}</p>`;
+            };
 
-	.bad { color: red;	}
+            const displayDistance = (distance, cityName) => {
+                document.getElementById('distance').innerHTML = `<p>${distance} kms. from your position to ${cityName}!</p>`;
+            };
 
-	.good { color: green; }
+            const initializeNextCity = () => {
+                if (index < cities.length) {
+                    setCityMessage();
+                } else {
+                    document.getElementById('distance').innerHTML = '<p class="good"><strong>Congrats!</strong></p>';
+                    document.getElementById('result').innerHTML = `<strong>Your score is  ${km}!</strong>`;
+                    document.getElementById('city').innerHTML = '<p>Coded by <a href="https://jjmontalban.github.io/">JJMöntabán</a></p>';
+                }
+            };
 
-</style>
+            const handleClick = (e) => {
+                const posA = new google.maps.LatLng(cities[index].lat, cities[index].long);
+                const posB = e.latLng;
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMXbW9Zg4A_Btvr8JmgR1TIQrgrarXsAU&libraries=geometry" async></script>
+                new google.maps.Marker({
+                    position: posB,
+                    map: map,
+                    title: 'Attempt',
+                    animation: google.maps.Animation.DROP,
+                    icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
+                });
 
-<script type="text/javascript">
+                new google.maps.Marker({
+                    position: posA,
+                    map: map,
+                    title: 'Reference',
+                    animation: google.maps.Animation.DROP,
+                    draggable: false
+                });
 
-	window.onload = function() {
+                const distance = (google.maps.geometry.spherical.computeDistanceBetween(posA, posB) / 1000).toFixed(2);
 
-  		map = new google.maps.Map(document.getElementById('map'), {
-					center: {lat: 48.924646, lng: 8.561119},
-    				zoom: 4,
-	    			styles:
-						[
-							{"elementType": "labels", "stylers": [{"visibility": "off"}]},
-							{"featureType": "road","stylers": [{"visibility": "off"}]}
-						]
-	  			});
+                displayDistance(distance, cities[index].capitalCity);
 
-  		cities = [
-			{"capitalCity": "Zurich","lat":"47.37748605291098","long":"8.536714999999958"},
-			{"capitalCity": "Paris","lat": "48.858877666233724","long": "2.3470598999999766"},
-			{"capitalCity": "Madrid","lat": "40.43807216375375","long": "-3.6795366500000455"},
-			{"capitalCity": "London","lat": "51.528868434293244","long": "-0.10159864999991441"},
-			{"capitalCity": "Berlin","lat": "52.50716750345388","long": "13.424731749999978"},
-			{"capitalCity": "Amsterdam","lat": "52.354714323965155","long":"4.898623049999969"},
-			{"capitalCity": "Rome","lat": "41.91022566604198","long": "12.535997900000098"},
-			{"capitalCity": "Oslo","lat": "59.89396160257894","long": "10.785116500000072"},
-			{"capitalCity": "Vienna","lat": "48.22078734798841","long": "16.38005995000003"}
-		];
+                if (distance < 50) {
+                    displayResult('Good attempt! No kms. reduction', true);
+                } else {
+                    km -= distance;
+                    km = km.toFixed(2);
+                    displayResult(`Bad! ${km} kms. left!`, false);
+                }
 
-  		km = 5000;
-		i = 0;
+                index++;
+                initializeNextCity();
 
-		document.getElementById('city').innerHTML = '<p><strong>Locate ' + cities[i].capitalCity + '</strong></p>';
+                if (km < 0) {
+                    document.getElementById('distance').innerHTML = '<p class="bad"><strong>Ouch!</strong></p>';
+                    document.getElementById('result').innerHTML = '<strong>Kilometers Over!</strong>';
+                    document.getElementById('city').innerHTML = '<p>Coded by <a href="https://jjmontalban.github.io/">JJMöntabán</a></p>';
+                }
+            };
 
-		map.addListener('click', function(e) {
-
-			posA = new google.maps.LatLng(cities[i].lat,cities[i].long);
-			posB = e.latLng;
-
-			markB = new google.maps.Marker({
-								position: posB,
-								map: map,
-								title: 'intento',
-								animation: google.maps.Animation.DROP,
-								icon : 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
-								});
-
-			markA = new google.maps.Marker({
-								position: posA,
-								map: map,
-								title: 'soy la referencia',
-								animation: google.maps.Animation.DROP,
-								draggable: false
-								});
-
-			res = (( google.maps.geometry.spherical.computeDistanceBetween( posA, markB.getPosition() )) /1000 ).toFixed(2);
-			
-			document.getElementById('distance').innerHTML = '<p>' + res + ' kms. from your position to ' + cities[i].capitalCity + '!</p>';
-
-			if( res < 50 ) {
-				document.getElementById('result').innerHTML = '<p class="good">Good appointment! No kms. reduction</p>';
-				i++;
-			}else {
-				km = (km - res).toFixed(2);
-				document.getElementById('result').innerHTML = '<p class="bad"> Bad! ' + km + ' kms. left! </p>';
-				i++;
-			}
-
-			if( i < cities.length ) {
-				document.getElementById('city').innerHTML = '<p><strong>Now locate ' + cities[i].capitalCity + '</strong></p>';
-				console.log(i);
-			}else {
-				document.getElementById('distance').innerHTML = '<p class="good"><strong>Congrats!</strong></p>';
-				document.getElementById('result').innerHTML = '<strong>you score is ' + km + '!</strong>';
-				document.getElementById('city').innerHTML = '<p>Coded by <a href="https://jjmontalban.github.io/">JJMöntabán</a></p>';
-			}
-
-			if( km < 0 ) {
-			  	document.getElementById('distance').innerHTML = '<p class="bad"><strong>Ouch!</strong></p>';
-			  	document.getElementById('result').innerHTML = '<strong>Kilometers Over!</strong>';
-				document.getElementById('city').innerHTML = '<p>Coded by <a href="https://jjmontalban.github.io/">JJMöntabán</a></p>';
-			}
-
-		});
-	};
-
-</script>
-
+            map.addListener('click', handleClick);
+            setCityMessage();
+        };
+    </script>
 </head>
 <body>
-	<div id="distance"></div>
-	<div id="result"></div>
-	<div id="city"></div>
-	<div id="map"></div>
+    <div id="distance"></div>
+    <div id="result"></div>
+    <div id="city"></div>
+    <div id="map"></div>
 </body>
 </html>
