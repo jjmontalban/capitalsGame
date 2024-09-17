@@ -4,128 +4,18 @@
     <meta charset="utf-8" />
     <title>Capitals Game</title>
     <link rel="stylesheet" href="style.css">
-    <script 
-        src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=geometry" 
-        async 
-        defer>
-    </script>
 
-    <script type="text/javascript">
-        window.onload = function() {
-            const cities = [
-                { capitalCity: "Zurich", lat: "47.37748605291098", long: "8.536714999999958" },
-                { capitalCity: "Paris", lat: "48.858877666233724", long: "2.3470598999999766" },
-                { capitalCity: "Madrid", lat: "40.43807216375375", long: "-3.6795366500000455" },
-                { capitalCity: "London", lat: "51.528868434293244", long: "-0.10159864999991441" },
-                { capitalCity: "Berlin", lat: "52.50716750345388", long: "13.424731749999978" },
-                { capitalCity: "Amsterdam", lat: "52.354714323965155", long: "4.898623049999969" },
-                { capitalCity: "Rome", lat: "41.91022566604198", long: "12.535997900000098" },
-                { capitalCity: "Oslo", lat: "59.89396160257894", long: "10.785116500000072" },
-                { capitalCity: "Vienna", lat: "48.22078734798841", long: "16.38005995000003" }
-            ];
+    <!-- Cargar el script de tu aplicación -->
+    <script src="script.js" defer></script>
+    <!-- Cargar la API de Google Maps una sola vez con el callback a initMap y defer -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB815aX3gpqxo_lUcmuUyeMH3RsyM1JcQc&libraries=geometry&callback=initMap" async></script>
 
-            let km = 5000;
-            let index = 0;
-
-            // Inicializa el mapa
-            const map = new google.maps.Map(document.getElementById('map'), {
-                center: { lat: 48.924646, lng: 8.561119 },
-                zoom: 5,
-                styles: [
-                    { "elementType": "labels", "stylers": [{ "visibility": "off" }] },
-                    { "featureType": "road", "stylers": [{ "visibility": "off" }] }
-                ]
-            });
-
-            const setCityMessage = () => {
-                document.getElementById('city').innerHTML = `<p><strong>Locate ${cities[index].capitalCity}</strong></p>`;
-            };
-
-            const displayResult = (message, isGood) => {
-                const resultElement = document.getElementById('result');
-                resultElement.innerHTML = `<p class="${isGood ? 'good' : 'bad'}">${message}</p>`;
-            };
-
-            const displayDistance = (distance, cityName) => {
-                document.getElementById('distance').innerHTML = `<p>${distance} kms. from your position to ${cityName}!</p>`;
-            };
-
-            const initializeNextCity = () => {
-                if (index < cities.length) {
-                    setCityMessage();
-                } else {
-                    document.getElementById('distance').innerHTML = '<p class="good"><strong>Congrats!</strong></p>';
-                    document.getElementById('result').innerHTML = `<strong>Your score is  ${km}!</strong>`;
-                    document.getElementById('city').innerHTML = '<p>Coded by <a href="https://jjmontalban.github.io/">JJMöntabán</a></p>';
-                }
-            };
-
-            const handleClick = (e) => {
-                const posA = new google.maps.LatLng(cities[index].lat, cities[index].long);
-                const posB = e.latLng;
-
-                new google.maps.Marker({
-                    position: posB,
-                    map: map,
-                    title: 'Attempt',
-                    animation: google.maps.Animation.DROP,
-                    icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
-                });
-
-                new google.maps.Marker({
-                    position: posA,
-                    map: map,
-                    title: 'Reference',
-                    animation: google.maps.Animation.DROP,
-                    draggable: false
-                });
-
-                const distance = (google.maps.geometry.spherical.computeDistanceBetween(posA, posB) / 1000).toFixed(2);
-
-                displayDistance(distance, cities[index].capitalCity);
-
-                if (distance < 50) {
-                    displayResult('Good attempt! No kms. reduction', true);
-                } else {
-                    km -= distance;
-                    km = km.toFixed(2);
-                    displayResult(`Bad! ${km} kms. left!`, false);
-                }
-
-                index++;
-                initializeNextCity();
-
-                if (km < 0) {
-                    document.getElementById('distance').innerHTML = '<p class="bad"><strong>Ouch!</strong></p>';
-                    document.getElementById('result').innerHTML = '<strong>Kilometers Over!</strong>';
-                    document.getElementById('city').innerHTML = '<p>Coded by <a href="https://jjmontalban.github.io/">JJMöntabán</a></p>';
-                }
-            };
-
-            map.addListener('click', handleClick);
-
-            // Evento onclick para el botón "Next"
-            document.getElementById('nextBtn').onclick = function() {
-                document.getElementById('popup').style.display = 'none';
-                document.getElementById('distance').style.display = 'block';  // Muestra los otros mensajes
-                document.getElementById('result').style.display = 'block';   // Muestra resultados
-                document.getElementById('city').style.display = 'block';     // Muestra la ciudad
-                initializeNextCity();  // Comienza el juego
-            };
-
-            // Muestra el popup al cargar
-            document.getElementById('popup').style.display = 'block';
-        };
-    </script>
 </head>
 <body>
-    <div id="popup">
-        <p>Welcome to Capitals Game! Ready to locate the first capital?</p>
-        <button id="nextBtn">Next</button>
-    </div>    
-    <div id="distance"></div>
-    <div id="result"></div>
-    <div id="city"></div>
+    <div id="popup" class="message-box"></div>
+    <div id="distance" class="message-box"></div>
+    <div id="result" class="message-box"></div>
+    <div id="city" class="message-box"></div>
     <div id="map"></div>
 </body>
 </html>

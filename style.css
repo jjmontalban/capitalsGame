@@ -1,70 +1,57 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;1,100&display=swap');
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+}
 
 html, body {
     height: 100%;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-}
-
-* {
-    font-family: 'Roboto', sans-serif;
+    width: 100%;
 }
 
 #map {
     width: 100%;
-    height: 100%;
-}
-#distance, #result, #city {
-position: absolute;
-left: 50%;
-transform: translateX(-50%);
-color: #fff;
-background: rgba(0, 0, 0, 0.5);
-padding: 10px;
-border-radius: 5px;
-z-index: 10;
+    height: 100vh;
 }
 
-#distance, #result, #city {
-    display: none; /* Ocultos por defecto */
-}
-
-#distance {
-top: 10px;
-}
-
-#result {
-top: 90px;
-}
-
-#city {
-top: 170px;
-}
-
-.bad { color: red; }
-.good { color: green; }
-
-#popup {
+.message-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.9); /* Fondo semitransparente */
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: rgba(0, 0, 0, 0.7);
     padding: 20px;
-    color: white;
     border-radius: 10px;
-    text-align: center;
-    display: none;
-    z-index: 20;
+    z-index: 1000; /* Asegura que esté por encima del mapa */
+    max-width: 90%;
 }
 
-#popup button {
-    background-color: #28a745;
+button {
+    background-color: #4CAF50; /* Verde */
     color: white;
     padding: 10px 20px;
+    margin-top: 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    margin-top: 10px;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.good {
+    color: green;
+}
+
+.bad {
+    color: red;
 }
