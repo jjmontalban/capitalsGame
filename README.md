@@ -1,23 +1,47 @@
-# capitalsGame
+# Capitals Game
 
-You Can check the game <a href="https://jjmontalban.github.io/capitalsGame/">HERE</a>
+Puedes probar el juego **[AQUÍ](https://jjmontalban.github.io/capitalsGame/)**.
 
-A responsive Javascript Game that works on desktop and mobile browsers:
+Capitals Game es un juego interactivo en JavaScript, totalmente responsive, que funciona en navegadores de escritorio y móviles.
 
+## Descripción del Juego
 
-     • Use the given JSON to provide a list of cities (embed the JSON structure in your HTML)
+El jugador verá un mapa sin calles ni ciudades, mostrando solo las fronteras de los países. El objetivo es localizar correctamente las ciudades mencionadas en el mapa. Después de colocar el marcador en el mapa, el juego mostrará la ubicación correcta de la ciudad y la diferencia en kilómetros entre la posición del jugador y la ciudad real. Si la selección está a menos de 50 km de la ciudad, se considerará "correcta".
 
-     • Find the right location of each city as latitude / longitude values and extend the JSON file
+## Cómo Jugar
 
-     • Tested it on a mobile device and  several browsers
+1. **Lista de Ciudades**: El juego utiliza un archivo JSON que contiene una lista de ciudades con sus coordenadas de latitud y longitud. 
+2. **Coloca el Marcador**: Intenta localizar cada ciudad en el mapa y coloca un marcador en la posición que creas correcta.
+3. **Resultado**: El juego te mostrará la distancia en kilómetros entre tu marcador y la ubicación real de la ciudad.
+4. **Puntuación**: Si tu marcador está a menos de 50 km de la ciudad, se considerará un buen intento.
 
+## Lógica del Juego
 
+- El jugador comienza con una puntuación inicial de **5000 kilómetros**.
+- En cada ronda, la diferencia en kilómetros entre la ciudad real y tu marcador se resta de tu puntuación total.
+- El objetivo es mantener la mayor cantidad de kilómetros posible mientras encuentras las ciudades.
 
-2.1.1 GAME DESCRIPTION
-The player will see a map of Europe without Streets + Cities (Only Country-borders). Its mission is to find the right location to the city name on this map. After placing the needle pin, the game will show you the right location of the city and the difference of your needle pin and the city in kilometres. If it is in around 50km of the city, the selection will be defined as "correct".
+## Fin del Juego
 
-2.1.2 GAMES LOGIC
-In the beginning, the player has a predetermined score of 1500 that symbolizes kilometres. At each round the difference between position of the city and your needle pin are reducing your score.
+- El juego termina cuando te quedas sin kilómetros.
+- Tu puntuación final será la cantidad de ciudades que has logrado encontrar correctamente o la cantidad de kilómetros que te quedan al final del juego.
 
-2.1.3 GAME END
-The game ends when no kilometres are left. The high score is the amount of cities you have found.
+## Construido con 🛠️
+
+- **HTML5**: Para la estructura del juego.
+- **CSS3**: Para el diseño responsive en varios dispositivos.
+- **JavaScript**: Para la lógica del juego y la integración con Google Maps.
+- **Google Maps API**: Para la funcionalidad del mapa interactivo.
+- **Fetch API**: Para la carga dinámica del archivo JSON con las ciudades y coordenadas.
+
+## Licencia 📄
+
+Este proyecto es de código abierto bajo la [Licencia MIT](https://opensource.org/licenses/MIT).
+
+## Agradecimientos 🎁
+
+* Dale una estrella a este proyecto 📢 
+
+---
+
+Desarrollado con ❤️ por [JJMontalban](https://jjmontalban.github.io) 😊
