@@ -21,19 +21,20 @@ html, body {
     justify-content: center;
     align-items: center;
     text-align: center;
-    background-color: rgba(255, 255, 255, 0.9); /* Fondo semitransparente */
+    background-color: rgba(255, 255, 255, 0.9);
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     padding: 20px;
     border-radius: 10px;
-    z-index: 1000; /* Asegura que esté por encima del mapa */
+    z-index: 1000;
     max-width: 90%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 button {
-    background-color: #4CAF50; /* Verde */
+    background-color: #4CAF50;
     color: white;
     padding: 10px 20px;
     margin-top: 20px;
@@ -50,8 +51,10 @@ button:hover {
 
 .good {
     color: green;
+    font-weight: bold;
 }
 
 .bad {
     color: red;
+    font-weight: bold;
 }
