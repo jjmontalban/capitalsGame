@@ -40,8 +40,4 @@ Este proyecto es de código abierto bajo la [Licencia MIT](https://opensource.or
 
 ## Agradecimientos 🎁
 
-* Dale una estrella a este proyecto 📢 
-
----
-
-Desarrollado con ❤️ por [JJMontalban](https://jjmontalban.github.io) 😊
+* Dale una estrella a este proyecto
